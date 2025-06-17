@@ -3603,7 +3603,7 @@ void type(char str[20])
 			 getch();
 			 textcolor(WHITE);
 			 goto M;
-		CASE 'E':
+		case 'E':
 		case 'e':exit(0);
 			break;
 		default:gotoxy(19,11);
