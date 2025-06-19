@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    android:gravity="center"
+    android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:background="@drawable/homeicon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:textColor="#000"
+            android:textSize="30dp"
+            android:text="Home"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="13dp"/>
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="@drawable/devicon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:textColor="#000"
+            android:textSize="30dp"
+            android:text="Developer"/>
+
+</LinearLayout>

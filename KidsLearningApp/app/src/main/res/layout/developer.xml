@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fcf">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:text="BACK   "
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:layout_gravity="right"
+        android:background="@android:color/transparent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:textColor="#95f"
+        android:textSize="25dp"
+        android:text="'Kids Learning App' is developed by Saumya Gangwar, student of B.Sc.(H)Computer Science - II Year in Hansraj College, University of Delhi.\n\nYou may contact at:\nsmya13.gangwar@gmail.com\nThanks!!"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+</LinearLayout>
