@@ -142,50 +142,63 @@
     }
 
     async function init(){
-      renderSample();
-      const token = getCleanToken();
-      if (!token) { showSignedOut('Not signed in. Go to Home and sign in.'); return; }
-
-      try {
-        const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token }});
-        const text = await res.text();
-        if (!res.ok) {
-          // show raw server message
-          showSignedOut('Signed in but failed to fetch profile. Please go Home and login again.');
-          document.getElementById('profile').textContent = text;
-          console.error('/api/auth/me returned error:', res.status, text);
-          return;
+        renderSample();
+        const token = getCleanToken();
+        if (!token)
+        {
+            showSignedOut('Not signed in. Go to Home and sign in.');
+            return;
         }
-        const profile = JSON.parse(text);
-        showSignedIn(profile);
-      } catch (err) {
-        showSignedOut('Network error while fetching profile. Go Home and try again.');
-        console.error(err);
-      }
+
+        try
+        {
+            const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token }});
+            const text = await res.text();
+            if (!res.ok)
+            {
+            // show raw server message
+            showSignedOut('Signed in but failed to fetch profile. Please go Home and login again.');
+            document.getElementById('profile').textContent = text;
+            console.error('/api/auth/me returned error:', res.status, text);
+            return;
+            }
+            const profile = JSON.parse(text);
+            showSignedIn(profile);
+        }
+        catch (err)
+        {
+            showSignedOut('Network error while fetching profile. Go Home and try again.');
+            console.error(err);
+        }
     }
 
     // init
-    (async function init(){
-      renderSample();
-      const token = localStorage.getItem('token');
-      if (!token) {
-        showSignedOut('Not signed in. Go to Home and sign in.');
-        return;
-      }
+    (async function init()
+        {
+        renderSample();
+        const token = localStorage.getItem('token');
+        if (!token)
+        {
+            showSignedOut('Not signed in. Go to Home and sign in.');
+            return;
+        }
 
       // try fetch profile
-      try {
-        const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token }});
-        if (!res.ok) {
-          // token might be invalid — treat as logged out
-          showSignedOut('Signed in but failed to fetch profile. Please go Home and login again.');
-          return;
+        try {
+            const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token }});
+            if (!res.ok)
+            {
+                // token might be invalid — treat as logged out
+                showSignedOut('Signed in but failed to fetch profile. Please go Home and login again.');
+                return;
+            }
+            const profile = await res.json();
+            showSignedIn(profile);
         }
-        const profile = await res.json();
-        showSignedIn(profile);
-      } catch (err) {
-        showSignedOut('Network error while fetching profile. Go Home and try again.');
-      }
+        catch (err)
+        {
+            showSignedOut('Network error while fetching profile. Go Home and try again.');
+        }
     })();
   </script>
 </body>

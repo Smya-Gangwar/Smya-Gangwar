@@ -51,7 +51,10 @@ app.get('*', (req, res) => {
 // Global error handler (optional)
 app.use((err, req, res, next) => {
   console.error('Server Error:', err);
-  res.status(500).json({ message: 'Server error', error: err.message });
+  res.status(500).json({
+    message: 'Server error',
+    error: err.message 
+  });
 });
 
 // Start server (replace current start/listen block)
@@ -63,10 +66,13 @@ function tryListen(port) {
   });
 
   server.on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
+    if (err.code === 'EADDRINUSE')
+    {
       console.log(`Port ${port} in use, trying ${port + 1}`);
       tryListen(port + 1);
-    } else {
+    }
+    else
+      {
       console.error('Server error:', err);
       process.exit(1);
     }
@@ -74,4 +80,3 @@ function tryListen(port) {
 }
 
 tryListen(DEFAULT_PORT);
-

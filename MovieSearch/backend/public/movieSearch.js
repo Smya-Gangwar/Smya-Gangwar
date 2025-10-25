@@ -1,23 +1,31 @@
 (function () {
   // prevent duplicate popups
-  function removeExisting() {
+  function removeExisting()
+  {
     const existing = document.getElementById('ms-auth-overlay');
-    if (existing) existing.remove();
+    if (existing)
+		existing.remove();
   }
 
-  function createEl(tag, props = {}, children = []) {
+  function createEl(tag, props = {}, children = [])
+  {
     const el = document.createElement(tag);
     Object.entries(props).forEach(([k, v]) => {
-      if (k === 'class') el.className = v;
-      else if (k === 'html') el.innerHTML = v;
-      else if (k === 'style') Object.assign(el.style, v);
-      else el.setAttribute(k, v);
+      if (k === 'class')
+		el.className = v;
+      else if (k === 'html')
+		el.innerHTML = v;
+      else if (k === 'style')
+		Object.assign(el.style, v);
+      else
+		el.setAttribute(k, v);
     });
     children.forEach(c => el.appendChild(c));
     return el;
   }
 
-  function switchTab(panel, tab) {
+  function switchTab(panel, tab)
+  {
     const loginForm = panel.querySelector('#ms-login-form');
     const signupForm = panel.querySelector('#ms-signup-form');
     const resetForm = panel.querySelector('#ms-reset-form');
@@ -26,15 +34,18 @@
     const isLogin = tab === 'login';
     loginForm.style.display = isLogin ? 'block' : 'none';
     signupForm.style.display = isLogin ? 'none' : 'block';
-    if (resetForm) resetForm.style.display = 'none';
+    if (resetForm)
+		resetForm.style.display = 'none';
     tLogin.classList.toggle('ms-active', isLogin);
     tSignup.classList.toggle('ms-active', !isLogin);
     // focus first input
     const firstInput = (isLogin ? loginForm : signupForm).querySelector('input');
-    if (firstInput) setTimeout(() => firstInput.focus(), 50);
+    if (firstInput)
+		setTimeout(() => firstInput.focus(), 50);
   }
 
-  async function postJSON(url, payload) {
+  async function postJSON(url, payload)
+  {
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -42,20 +53,33 @@
     });
     // try parse JSON, otherwise capture text for debugging
     let data;
-    try { data = await res.json(); } catch (err) { data = await res.text().catch(() => ({})); }
+    try
+	{
+		data = await res.json();
+	}
+	catch (err)
+	{
+		data = await res.text().catch(() => ({}));
+	}
     return { ok: res.ok, status: res.status, data, url };
   }
 
   // try multiple endpoints in order until one returns a non-404 (useful when backend route name differs)
-  async function tryPostWithFallback(urls, payload) {
+  async function tryPostWithFallback(urls, payload)
+  {
     let last;
-    for (const u of urls) {
-      try {
+    for (const u of urls)
+	{
+      try
+	  {
         const r = await postJSON(u, payload);
         last = r;
         // treat anything but 404 as a valid response to inspect
-        if (r.status !== 404) return r;
-      } catch (err) {
+        if (r.status !== 404)
+			return r;
+      }
+	  catch (err)
+	  {
         last = { ok: false, status: 0, data: err.message || String(err), url: u };
       }
     }
@@ -63,28 +87,37 @@
   }
 
   // validation helpers
-  function validateEmail(email) {
-    if (!email) return false;
+  function validateEmail(email)
+  {
+    if (!email)
+		return false;
     // simple, effective email regex
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   }
 
-  function validateStrongPassword(pw) {
+  function validateStrongPassword(pw)
+  {
     // at least 8 chars, one lowercase, one uppercase, one digit, one special char
     const re = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).*$/;
     return re.test(pw);
   }
 
-  function passwordStrengthText(pw) {
-    if (!pw) return '';
-    if (pw.length < 8) return 'Too short';
+  function passwordStrengthText(pw)
+  {
+    if (!pw)
+		return '';
+    if (pw.length < 8)
+		return 'Too short';
     const veryStrong = /^(?=.{12,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).*$/;
-    if (veryStrong.test(pw)) return 'Very strong';
-    if (validateStrongPassword(pw)) return 'Strong';
+    if (veryStrong.test(pw))
+		return 'Very strong';
+    if (validateStrongPassword(pw))
+		return 'Strong';
     // medium: at least 8 and two of the char classes
     const medium = /^(?=.{8,}$)((?=.*[a-z])(?=.*[A-Z])|(?=.*[a-z])(?=.*\d)|(?=.*[A-Z])(?=.*\d)).*$/;
-    if (medium.test(pw)) return 'Medium';
+    if (medium.test(pw))
+		return 'Medium';
     return 'Weak';
   }
 
@@ -261,147 +294,200 @@
 
     // forgot/reset handlers (operate on forms even before added to DOM)
     const forgotBtn = loginForm.querySelector('#ms-forgot-btn');
-    if (forgotBtn) {
+    if (forgotBtn)
+	{
       forgotBtn.addEventListener('click', () => {
         loginForm.style.display = 'none';
         signupForm.style.display = 'none';
         resetForm.style.display = 'block';
         const e = resetForm.querySelector('input[name="email"]');
-        if (e) setTimeout(() => e.focus(), 50);
+        if (e)
+			setTimeout(() => e.focus(), 50);
       });
     }
 
     // back button to return to login
     resetForm.addEventListener('click', (ev) => {
-      if (ev.target && ev.target.id === 'ms-reset-back') {
-        resetForm.style.display = 'none';
-        loginForm.style.display = 'block';
-      }
+      	if (ev.target && ev.target.id === 'ms-reset-back')
+		{
+			resetForm.style.display = 'none';
+			loginForm.style.display = 'block';
+      	}
     });
 
     // reset form submit handler
     resetForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = resetForm.email.value.trim();
-      const msg = resetForm.querySelector('#ms-reset-msg');
-      msg.textContent = '';
-      if (!validateEmail(email)) { msg.style.color = '#b00020'; msg.textContent = 'Enter a valid email.'; return; }
-      try {
-        const res = await postJSON('/api/auth/forgot', { email });
-        if (!res.ok) {
-          msg.style.color = '#b00020';
-          msg.textContent = res.data?.message || `Request failed (${res.status})`;
-          return;
-        }
-        msg.style.color = '#1b7f3a';
-        msg.textContent = res.data?.message || 'If an account exists you will receive reset instructions.';
-      } catch (err) {
-        msg.style.color = '#b00020';
-        msg.textContent = 'Network error';
-        console.error(err);
-      }
+		e.preventDefault();
+		const email = resetForm.email.value.trim();
+		const msg = resetForm.querySelector('#ms-reset-msg');
+		msg.textContent = '';
+		if (!validateEmail(email))
+		{
+			msg.style.color = '#b00020';
+			msg.textContent = 'Enter a valid email.'; 
+			return; 
+		}
+      	try
+		{
+			const res = await postJSON('/api/auth/forgot', { email });
+			if (!res.ok) {
+				msg.style.color = '#b00020';
+				msg.textContent = res.data?.message || `Request failed (${res.status})`;
+				return;
+			}
+			msg.style.color = '#1b7f3a';
+			msg.textContent = res.data?.message || 'If an account exists you will receive reset instructions.';
+      	}
+		catch (err)
+		{
+			msg.style.color = '#b00020';
+			msg.textContent = 'Network error';
+			console.error(err);
+      	}
     });
 
     // add inline password strength / match helper after innerHTML is set
     const pwdInput = signupForm.querySelector('input[name="password"]');
     const pwdConfirm = signupForm.querySelector('input[name="confirm"]');
     const signupMsg = panel ? panel.querySelector('#ms-signup-msg') : null;
-    if (pwdInput) {
-      const strengthEl = createEl('div', {
-        id: 'ms-pass-strength',
-        style: {
-          fontSize: '12px',
-          color: '#444',
-          marginTop: '6px',
-          minHeight: '18px'
-        }
-      });
-      // insert after password input
-      pwdInput.parentNode.insertBefore(strengthEl, pwdInput.nextSibling);
-      pwdInput.addEventListener('input', () => {
-        const s = passwordStrengthText(pwdInput.value);
-        let color = '#b00020';
-        if (s === 'Very strong' || s === 'Strong') color = '#1b7f3a';
-        else if (s === 'Medium') color = '#b77f00';
-        strengthEl.textContent = s ? `Password: ${s}` : '';
-        strengthEl.style.color = color;
-      });
+    if (pwdInput)
+	{
+      	const strengthEl = createEl('div', {
+			id: 'ms-pass-strength',
+			style: {
+				fontSize: '12px',
+				color: '#444',
+				marginTop: '6px',
+				minHeight: '18px'
+        	}
+      	});
+		// insert after password input
+		pwdInput.parentNode.insertBefore(strengthEl, pwdInput.nextSibling);
+		pwdInput.addEventListener('input', () => {
+			const s = passwordStrengthText(pwdInput.value);
+			let color = '#b00020';
+			if (s === 'Very strong' || s === 'Strong')
+				color = '#1b7f3a';
+			else if (s === 'Medium')
+				color = '#b77f00';
+			strengthEl.textContent = s ? `Password: ${s}` : '';
+			strengthEl.style.color = color;
+		});
     }
-    if (pwdConfirm && pwdInput) {
-      const matchEl = createEl('div', {
-        id: 'ms-pass-match',
-        style: { fontSize: '12px', color: '#444', marginTop: '6px', minHeight: '18px' }
-      });
-      pwdConfirm.parentNode.insertBefore(matchEl, pwdConfirm.nextSibling);
-      const updateMatch = () => {
-        if (!pwdConfirm.value) { matchEl.textContent = ''; return; }
-        matchEl.textContent = (pwdInput.value === pwdConfirm.value) ? 'Passwords match' : 'Passwords do not match';
-        matchEl.style.color = (pwdInput.value === pwdConfirm.value) ? '#1b7f3a' : '#b00020';
-      };
-      pwdInput.addEventListener('input', updateMatch);
-      pwdConfirm.addEventListener('input', updateMatch);
+    if (pwdConfirm && pwdInput)
+	{
+		const matchEl = createEl('div', {
+			id: 'ms-pass-match',
+			style: { fontSize: '12px', color: '#444', marginTop: '6px', minHeight: '18px' }
+		});
+		pwdConfirm.parentNode.insertBefore(matchEl, pwdConfirm.nextSibling);
+		const updateMatch = () => {
+			if (!pwdConfirm.value)
+			{
+				matchEl.textContent = '';
+				return;
+			}
+			matchEl.textContent = (pwdInput.value === pwdConfirm.value) ? 'Passwords match' : 'Passwords do not match';
+			matchEl.style.color = (pwdInput.value === pwdConfirm.value) ? '#1b7f3a' : '#b00020';
+		};
+		pwdInput.addEventListener('input', updateMatch);
+		pwdConfirm.addEventListener('input', updateMatch);
     }
 
     // submit handlers
     loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = loginForm.email.value.trim();
-      const password = loginForm.password.value;
-      const msg = panel.querySelector('#ms-login-msg');
-      msg.textContent = '';
-      if (!email || !password) { msg.textContent = 'Email and password required.'; return; }
-      if (!validateEmail(email)) { msg.textContent = 'Enter a valid email address.'; return; }
-      if (password.length < 6) { msg.textContent = 'Password must be at least 6 characters.'; return; }
-      try {
-        const res = await postJSON('/api/auth/login', { email, password });
-        if (!res.ok) {
-          msg.textContent = res.data?.message || `Login failed (${res.status})`;
-          return;
-        }
-        if (res.data?.token) localStorage.setItem('token', res.data.token);
-        overlay.remove();
-        // redirect to dashboard after login
-        window.location.href = '/dashboard.html';
-      } catch (err) {
-        msg.textContent = 'Network error';
-        console.error(err);
-      }
+		e.preventDefault();
+		const email = loginForm.email.value.trim();
+		const password = loginForm.password.value;
+		const msg = panel.querySelector('#ms-login-msg');
+		msg.textContent = '';
+		if (!email || !password)
+		{
+			msg.textContent = 'Email and password required.'; 
+			return;
+		}
+		if (!validateEmail(email))
+		{
+			msg.textContent = 'Enter a valid email address.';
+			return;
+		}
+		if (password.length < 6)
+		{
+			msg.textContent = 'Password must be at least 6 characters.';
+			return;
+		}
+		try
+		{
+			const res = await postJSON('/api/auth/login', { email, password });
+			if (!res.ok)
+			{
+				msg.textContent = res.data?.message || `Login failed (${res.status})`;
+				return;
+			}
+			if (res.data?.token)
+				localStorage.setItem('token', res.data.token);
+			overlay.remove();
+			// redirect to dashboard after login
+			window.location.href = '/dashboard.html';
+		}
+		catch (err)
+		{
+			msg.textContent = 'Network error';
+			console.error(err);
+		}
     });
 
     signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = signupForm.name.value.trim();
-      const email = signupForm.email.value.trim();
-      const password = signupForm.password.value;
-      const confirm = signupForm.confirm.value;
-      const msg = panel.querySelector('#ms-signup-msg');
-      msg.textContent = '';
-      if (!name || !email || !password) { msg.textContent = 'All fields required.'; return; }
-      if (!validateEmail(email)) { msg.textContent = 'Enter a valid email address.'; return; }
-      if (password !== confirm) { msg.textContent = 'Passwords do not match.'; return; }
-      if (!validateStrongPassword(password)) {
-        msg.textContent = 'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.';
-        return;
-      }
-      try {
-        const username = name.replace(/\s+/g, '').toLowerCase() || (email.split('@')[0] || '');
-        const payload = { name, username, email, password };
-        const res = await tryPostWithFallback(
-          ['/api/auth/register', '/api/auth/signup', '/auth/register', '/auth/signup'],
-          payload
-        );
-        if (!res.ok) {
-          const info = typeof res.data === 'string' ? res.data : (res.data && res.data.message) ? res.data.message : JSON.stringify(res.data || {});
-          msg.textContent = `Signup failed (${res.status}) ${res.url ? ' at ' + res.url : ''}: ${info}`;
-          return;
-        }
-        // do not auto-login after signup — show signup-success page and wait for user to go home and login
-        overlay.remove();
-        window.location.href = '/signup-success.html';
-      } catch (err) {
-        msg.textContent = 'Network error';
-        console.error(err);
-      }
+		e.preventDefault();
+		const name = signupForm.name.value.trim();
+		const email = signupForm.email.value.trim();
+		const password = signupForm.password.value;
+		const confirm = signupForm.confirm.value;
+		const msg = panel.querySelector('#ms-signup-msg');
+		msg.textContent = '';
+		if (!name || !email || !password)
+		{
+			msg.textContent = 'All fields required.';
+			return;
+		}
+		if (!validateEmail(email))
+		{
+			msg.textContent = 'Enter a valid email address.';
+			return; 
+		}
+		if (password !== confirm)
+		{
+			msg.textContent = 'Passwords do not match.';
+			return;
+		}
+		if (!validateStrongPassword(password))
+		{
+			msg.textContent = 'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character.';
+			return;
+		}
+		try
+		{
+			const username = name.replace(/\s+/g, '').toLowerCase() || (email.split('@')[0] || '');
+			const payload = { name, username, email, password };
+			const res = await tryPostWithFallback(
+				['/api/auth/register', '/api/auth/signup', '/auth/register', '/auth/signup'],
+				payload
+			);
+			if (!res.ok)
+			{
+				const info = typeof res.data === 'string' ? res.data : (res.data && res.data.message) ? res.data.message : JSON.stringify(res.data || {});
+				msg.textContent = `Signup failed (${res.status}) ${res.url ? ' at ' + res.url : ''}: ${info}`;
+				return;
+			}
+			// do not auto-login after signup — show signup-success page and wait for user to go home and login
+			overlay.remove();
+			window.location.href = '/signup-success.html';
+		}
+		catch (err)
+		{
+			msg.textContent = 'Network error';
+			console.error(err);
+		}
     });
 
     // assemble panel
@@ -417,15 +503,17 @@
 
     // click outside to close
     overlay.addEventListener('click', (ev) => {
-      if (ev.target === overlay) overlay.remove();
+      if (ev.target === overlay)
+		overlay.remove();
     });
 
     // esc to close
     function escHandler(e) {
-      if (e.key === 'Escape') {
-        overlay.remove();
-        document.removeEventListener('keydown', escHandler);
-      }
+		if (e.key === 'Escape')
+		{
+			overlay.remove();
+			document.removeEventListener('keydown', escHandler);
+		}
     }
     document.addEventListener('keydown', escHandler);
 
@@ -434,8 +522,13 @@
   };
 
   // add logout helper near the end of the file (exported globally)
-  window.logout = function () {
-    try { localStorage.removeItem('token'); } catch (e) {}
+  window.logout = function ()
+  {
+    try
+	{
+		localStorage.removeItem('token');
+	}
+	catch (e) {}
     window.location.href = '/';
   };
 })();
