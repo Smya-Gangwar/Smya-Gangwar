@@ -1,0 +1,379 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+	background: linear-gradient(to top right, #9933ff 50%, #ffccff 104%) no-repeat ;
+	width: 99%;
+	height: auto;
+}
+/*-----------------------------------------------------------------------------------------------------*/
+nav{
+	width: 100%;
+	display:flex;
+	background-color: black;
+}
+/*for title*/
+.title{
+	text-align: center;
+	padding:12px 25px;
+	font-size: 35px;
+	font-family: "Showcard Gothic";
+	text-decoration: none;
+	color: rgb(255,255,255);
+}
+/*for title subscript*/
+.title sup{
+	font-size: 8px;
+	font-family: monospace;
+	vertical-align: top;
+}
+/*for login link flexbox*/
+.flex-align-right{
+	margin-left: auto;
+	padding: 18px;
+	text-decoration: none;
+}
+/*for login box*/
+.flex-align-right span{
+	vertical-align: middle;
+	background-color: #00f;
+	padding: 5px 20px;
+	color: white;
+	font-family: monospace;
+	font-size: 13px;
+	border-radius: 8px;
+	transition: background-color 2s;
+}
+/*hover on span box*/
+nav a:hover span, .box1 a:hover span{
+	background-color: #b300b3;
+}
+/*make responsive*/
+@media screen and (max-width: 750px)
+{
+	nav{
+		flex-direction: column;
+		padding: 10px 0px;
+	}
+	.flex-align-right{
+		margin-left: 0px;
+		align-self: center;
+	}
+}
+/*--------------------------------------------------------------------------------------------*/
+.animate_win{
+	width: 100%;
+	height: 35vw;
+	position: relative;
+	overflow: hidden;
+	background-color: black;
+	border-bottom: 1px solid black;
+}
+/*for animation**/
+.animate_win>*:first-child{
+ 	animation: autoplay3;
+ 	animation-delay: 0s;
+ 	animation-duration: 80s;
+ 	animation-timing-function: linear;
+ 	animation-iteration-count: infinite;
+ }
+ /*at what ercent how it will change*/
+@keyframes autoplay3 {
+	0% {margin-top: 35vw} 0.2% {margin-top: 34vw} 0.5% {margin-top: 33vw} 0.7% {margin-top: 32vw} 1.0% {margin-top: 31vw} 1.2% {margin-top: 30vw} 1.5% {margin-top: 29vw} 1.7% {margin-top: 28vw}
+	2.0% {margin-top: 27vw} 2.2% {margin-top: 26vw} 2.5% {margin-top: 25vw} 2.7% {margin-top: 24vw} 3.0% {margin-top: 23vw} 3.2% {margin-top: 22vw} 3.5% {margin-top: 21vw} 3.7% {margin-top: 20vw} 4.0% {margin-top: 19vw}
+	4.2% {margin-top: 18vw} 4.5% {margin-top: 17vw} 4.7% {margin-top: 16vw} 5.0% {margin-top: 15vw} 5.2% {margin-top: 14vw} 5.5% {margin-top: 13vw} 5.7% {margin-top: 12vw} 5.9% {margin-top: 11vw} 6.0%{margin-top: 10vw}
+	6.2% {margin-top: 9vw} 6.4% {margin-top: 8vw} 6.6% {margin-top: 7vw} 6.8% {margin-top: 6vw} 7% {margin-top: 5vw} 7.2% {margin-top: 4vw} 7.4% {margin-top: 3vw} 7.5% {margin-top: 2vw} 7.7% {margin-top: 1vw} 
+	7.8% {margin-top: 0vw} 
+
+	8% {margin-top: -1vw} 8.2% {margin-top: -2vw} 8.4% {margin-top: -3vw} 8.7% {margin-top: -4vw} 8.9% {margin-top: -5vw} 9.0% {margin-top: -6vw} 9.3% {margin-top: -7vw}
+	9.5% {margin-top: -8vw} 9.7% {margin-top: -9vw} 10% {margin-top: -10vw} 10.2% {margin-top: -11vw} 10.5% {margin-top: -12vw} 10.7% {margin-top: -13vw} 10.9% {margin-top: -14vw} 11.2% {margin-top: -15vw} 11.4% {margin-top: -16vw}
+	11.6% {margin-top: -17vw} 11.8% {margin-top: -18vw} 12.1% {margin-top: -19vw} 12.3% {margin-top: -20vw} 12.5% {margin-top: -21vw} 12.8% {margin-top: -22vw} 13% {margin-top: -23vw} 13.2% {margin-top: -24vw} 13.4%{margin-top: -25vw}
+	13.7% {margin-top: -26vw} 13.9% {margin-top: -27vw} 14.2% {margin-top: -28vw} 14.4% {margin-top: -29vw} 14.7% {margin-top: -30vw} 14.9% {margin-top: -31vw} 15.1% {margin-top: -32vw} 15.3% {margin-top: -33vw} 15.4% {margin-top: -34vw} 
+	15.5% {margin-top: -35vw}
+
+	15.7% {margin-top: -36vw} 15.9% {margin-top: -37vw} 16.2% {margin-top: -38vw} 16.4% {margin-top: -39vw} 16.6% {margin-top: -40vw}
+	16.9% {margin-top: -41vw} 17.1% {margin-top: -42vw} 17.4% {margin-top: -43vw} 17.6% {margin-top: -44vw} 17.9% {margin-top: -45vw}
+	18.1% {margin-top: -46vw} 18.3% {margin-top: -47vw} 18.6% {margin-top: -48vw} 18.8% {margin-top: -49vw} 19% {margin-top: -50vw}
+	19.2% {margin-top: -51vw} 19.5% {margin-top: -52vw} 19.7% {margin-top: -53vw} 19.9% {margin-top: -54vw} 20.2% {margin-top: -55vw}
+	20.4% {margin-top: -56vw} 20.7% {margin-top: -57vw} 20.9% {margin-top: -58vw} 21.1% {margin-top: -59vw} 21.3% {margin-top: -60vw}
+	21.5% {margin-top: -61vw} 21.7% {margin-top: -62vw} 22% {margin-top: -63vw} 22.2% {margin-top: -64vw} 22.4% {margin-top: -65vw}
+	22.6% {margin-top: -66vw} 22.8% {margin-top: -67vw} 23% {margin-top: -68vw} 23.1% {margin-top: -69vw} 23.2% {margin-top: -70vw}
+
+	23.4% {margin-top: -71vw} 23.6% {margin-top: -72vw} 23.9% {margin-top: -73vw} 24.1% {margin-top: -74vw} 24.3% {margin-top: -75vw}
+	24.5% {margin-top: -76vw} 24.8% {margin-top: -77vw} 25% {margin-top: -78vw} 25.2% {margin-top: -79vw} 25.5% {margin-top: -80vw}
+	25.7% {margin-top: -81vw} 25.9% {margin-top: -82vw} 26.2% {margin-top: -83vw} 26.3% {margin-top: -84vw} 26.6% {margin-top: -85vw}
+	26.8% {margin-top: -85vw} 27% {margin-top: -87vw} 27.3% {margin-top: -88vw} 27.5% {margin-top: -89vw} 27.8% {margin-top: -90vw}
+	28% {margin-top: -91vw} 28.3% {margin-top: -92vw} 28.5% {margin-top: -93vw} 28.7% {margin-top: -94vw} 28.9% {margin-top: -95vw}
+	29.2% {margin-top: -95vw} 29.4% {margin-top: -97vw} 29.6% {margin-top: -98vw} 29.8% {margin-top: -99vw} 30.1% {margin-top: -100vw}
+	30.3% {margin-top: -101vw} 30.5% {margin-top: -102vw} 30.7% {margin-top: -103vw} 30.8% {margin-top: -104vw} 30.9% {margin-top: -105vw}
+
+	31% {margin-top: -106vw} 31.2% {margin-top: -107vw} 31.5% {margin-top: -108vw} 31.7% {margin-top: -109vw} 31.9% {margin-top: -110vw}
+	32.2% {margin-top: -111vw} 32.4% {margin-top: -112vw} 32.7% {margin-top: -113vw} 32.9% {margin-top: -114vw} 33.1% {margin-top: -115vw}
+	33.4% {margin-top: -116vw} 33.6% {margin-top: -117vw} 33.8% {margin-top: -118vw} 35.1% {margin-top: -119vw} 35.3% {margin-top: -120vw}
+	35.5% {margin-top: -121vw} 35.7% {margin-top: -122vw} 35.9% {margin-top: -123vw} 36% {margin-top: -124vw} 36.2% {margin-top: -125vw}
+	36.4% {margin-top: -126vw} 36.7% {margin-top: -127vw} 36.9% {margin-top: -128vw} 37.1% {margin-top: -129vw} 37.3% {margin-top: -130vw}
+	37.5% {margin-top: -131vw} 37.6% {margin-top: -132vw} 37.8% {margin-top: -133vw} 37.9% {margin-top: -134vw} 38.1% {margin-top: -135vw}
+	38.2% {margin-top: -136vw} 38.3% {margin-top: -137vw} 38.4% {margin-top: -138vw} 38.5% {margin-top: -139vw} 38.6% {margin-top: -140vw}
+
+	38.8% {margin-top: -141vw} 39% {margin-top: -142vw} 39.3% {margin-top: -143vw} 39.5% {margin-top: -144vw} 39.7% {margin-top: -145vw}
+	40% {margin-top: -146vw} 40.2% {margin-top: -147vw} 40.4% {margin-top: -148vw} 40.7% {margin-top: -149vw} 40.9% {margin-top: -150vw}
+	41.1% {margin-top: -151vw} 41.3% {margin-top: -152vw} 41.6% {margin-top: -153vw} 41.8% {margin-top: -154vw} 42% {margin-top: -155vw}
+	42.2% {margin-top: -155vw} 42.4% {margin-top: -157vw} 42.5% {margin-top: -158vw} 42.8% {margin-top: -159vw} 43% {margin-top: -160vw}
+	43.3% {margin-top: -161vw} 43.5% {margin-top: -162vw} 43.8% {margin-top: -163vw} 44% {margin-top: -164vw} 44.3% {margin-top: -165vw}
+	44.5% {margin-top: -165vw} 44.8% {margin-top: -167vw} 45% {margin-top: -168vw} 45.2% {margin-top: -169vw} 45.4% {margin-top: -170vw}
+	45.6% {margin-top: -171vw} 45.9% {margin-top: -172vw} 46.1% {margin-top: -173vw} 46.2% {margin-top: -174vw} 46.3% {margin-top: -175vw}
+
+	46.5% {margin-top: -176vw} 46.8% {margin-top: -177vw} 47% {margin-top: -178vw} 47.2% {margin-top: -179vw} 47.4% {margin-top: -180vw}
+	47.7% {margin-top: -181vw} 47.9% {margin-top: -182vw} 48.1% {margin-top: -183vw} 48.4% {margin-top: -184vw} 48.6% {margin-top: -185vw}
+	48.8% {margin-top: -186vw} 49.1% {margin-top: -187vw} 49.3% {margin-top: -188vw} 49.6% {margin-top: -189vw} 49.8% {margin-top: -190vw}
+	50% {margin-top: -191vw} 50.2% {margin-top: -192vw} 50.4% {margin-top: -193vw} 50.6% {margin-top: -194vw} 50.8% {margin-top: -195vw}
+	51.1% {margin-top: -196vw} 51.3% {margin-top: -197vw} 51.5% {margin-top: -198vw} 51.7% {margin-top: -199vw} 52% {margin-top: -200vw}
+	52.2% {margin-top: -201vw} 52.4% {margin-top: -202vw} 52.7% {margin-top: -203vw} 52.9% {margin-top: -204vw} 53.1% {margin-top: -205vw}
+	53.3% {margin-top: -206vw} 53.5% {margin-top: -207vw} 53.7% {margin-top: -208vw} 53.9% {margin-top: -209vw} 54% {margin-top: -210vw}
+
+	54.2% {margin-top: -211vw} 54.4% {margin-top: -212vw} 54.6% {margin-top: -213vw} 54.9% {margin-top: -214vw} 55.1% {margin-top: -215vw}
+	55.3% {margin-top: -216vw} 55.5% {margin-top: -217vw} 55.8% {margin-top: -218vw} 56% {margin-top: -219vw} 56.3% {margin-top: -220vw}
+	56.5% {margin-top: -221vw} 56.7% {margin-top: -222vw} 57% {margin-top: -223vw} 57.2% {margin-top: -224vw} 57.4% {margin-top: -225vw}
+	57.7% {margin-top: -225vw} 57.9% {margin-top: -227vw} 58.1% {margin-top: -228vw} 58.4% {margin-top: -229vw} 58.6% {margin-top: -230vw}
+	58.9% {margin-top: -231vw} 59.1% {margin-top: -232vw} 59.3% {margin-top: -233vw} 59.5% {margin-top: -234vw} 59.8% {margin-top: -235vw}
+	60.1% {margin-top: -235vw} 60.3% {margin-top: -237vw} 60.6% {margin-top: -238vw} 60.8% {margin-top: -239vw} 61.1% {margin-top: -240vw}
+	61.3% {margin-top: -241vw} 61.4% {margin-top: -242vw} 61.5% {margin-top: -243vw} 61.6% {margin-top: -244vw} 61.7% {margin-top: -245vw}
+
+	61.9% {margin-top: -246vw} 62.2% {margin-top: -247vw} 62.4% {margin-top: -248vw} 62.6% {margin-top: -249vw} 62.9% {margin-top: -250vw}
+	63.1% {margin-top: -251vw} 63.3% {margin-top: -252vw} 63.5% {margin-top: -253vw} 63.8% {margin-top: -254vw} 64% {margin-top: -255vw}
+	64.2% {margin-top: -256vw} 64.4% {margin-top: -257vw} 64.7% {margin-top: -258vw} 64.9% {margin-top: -259vw} 65.1% {margin-top: -260vw}
+	65.3% {margin-top: -261vw} 65.6% {margin-top: -262vw} 65.8% {margin-top: -263vw} 66% {margin-top: -264vw} 66.2% {margin-top: -265vw}
+	66.4% {margin-top: -266vw} 66.6% {margin-top: -267vw} 66.9% {margin-top: -268vw} 67.1% {margin-top: -269vw} 67.3% {margin-top: -270vw}
+	67.5% {margin-top: -271vw} 67.7% {margin-top: -272vw} 67.9% {margin-top: -273vw} 68.2% {margin-top: -274vw} 68.4% {margin-top: -275vw}
+	68.7% {margin-top: -276vw} 68.9% {margin-top: -277vw} 69.1% {margin-top: -278vw} 69.3% {margin-top: -279vw} 69.4% {margin-top: -280vw}
+
+	69.6% {margin-top: -281vw} 69.8% {margin-top: -282vw} 70% {margin-top: -283vw} 70.3% {margin-top: -284vw} 70.5% {margin-top: -285vw}
+	70.7% {margin-top: -286vw} 70.9% {margin-top: -287vw} 71.1% {margin-top: -288vw} 71.3% {margin-top: -289vw} 71.6% {margin-top: -290vw}
+	71.8% {margin-top: -291vw} 72.1% {margin-top: -292vw} 72.3% {margin-top: -293vw} 72.5% {margin-top: -294vw} 72.8% {margin-top: -295vw}
+	73% {margin-top: -296vw} 73.3% {margin-top: -297vw} 73.5% {margin-top: -298vw} 73.7% {margin-top: -299vw} 74% {margin-top: -300vw}
+	74.2% {margin-top: -301vw} 74.4% {margin-top: -302vw} 74.7% {margin-top: -303vw} 74.9% {margin-top: -304vw} 75.2% {margin-top: -305vw}
+	75.4% {margin-top: -306vw} 75.6% {margin-top: -307vw} 75.8% {margin-top: -308vw} 76% {margin-top: -309vw} 76.2% {margin-top: -310vw}
+	76.5% {margin-top: -311vw} 76.7% {margin-top: -312vw} 76.9% {margin-top: -313vw} 77% {margin-top: -314vw} 77.1% {margin-top: -315vw}
+
+	77.3% {margin-top: -316vw} 77.5% {margin-top: -317vw} 77.8% {margin-top: -318vw} 78% {margin-top: -319vw} 78.2% {margin-top: -320vw}
+	78.5% {margin-top: -321vw} 78.7% {margin-top: -322vw} 78.9% {margin-top: -323vw} 79.1% {margin-top: -324vw} 79.3% {margin-top: -325vw}
+	79.5% {margin-top: -326vw} 79.8% {margin-top: -327vw} 80% {margin-top: -328vw} 80.3% {margin-top: -329vw} 80.5% {margin-top: -330vw}
+	80.7% {margin-top: -331vw} 80.9% {margin-top: -332vw} 81.2% {margin-top: -333vw} 81.4% {margin-top: -334vw} 81.6% {margin-top: -335vw}
+	81.8% {margin-top: -336vw} 82% {margin-top: -337vw} 82.3% {margin-top: -338vw} 82.5% {margin-top: -339vw} 82.7% {margin-top: -340vw}
+	82.9% {margin-top: -341vw} 83% {margin-top: -342vw} 83.2% {margin-top: -343vw} 83.4% {margin-top: -344vw} 83.6% {margin-top: -345vw}
+	83.9% {margin-top: -346vw} 84.2% {margin-top: -347vw} 84.4% {margin-top: -348vw} 84.6% {margin-top: -349vw} 84.8% {margin-top: -350vw}
+
+	85% {margin-top: -351vw} 85.2% {margin-top: -352vw} 85.4% {margin-top: -353vw} 85.7% {margin-top: -354vw} 85.9% {margin-top: -355vw}
+	86.2% {margin-top: -356vw} 86.4% {margin-top: -357vw} 86.6% {margin-top: -358vw} 86.8% {margin-top: -359vw} 87% {margin-top: -360vw}
+	87.2% {margin-top: -361vw} 87.4% {margin-top: -362vw} 87.6% {margin-top: -363vw} 87.9% {margin-top: -364vw} 88.1% {margin-top: -365vw}
+	88.3% {margin-top: -366vw} 88.5% {margin-top: -367vw} 88.7% {margin-top: -368vw} 88.9% {margin-top: -369vw} 89.1% {margin-top: -370vw}
+	89.3% {margin-top: -371vw} 89.5% {margin-top: -372vw} 89.8% {margin-top: -373vw} 90% {margin-top: -374vw} 90.2% {margin-top: -375vw}
+	90.5% {margin-top: -376vw} 90.7% {margin-top: -377vw} 90.9% {margin-top: -378vw} 91.1% {margin-top: -379vw} 91.4% {margin-top: -380vw}
+	91.6% {margin-top: -381vw} 91.9% {margin-top: -382vw} 92.1% {margin-top: -383vw} 92.3% {margin-top: -384vw} 92.5% {margin-top: -385vw}
+
+	92.7% {margin-top: -386vw} 92.9% {margin-top: -387vw} 93.1% {margin-top: -388vw} 93.3% {margin-top: -389vw} 93.5% {margin-top: -390vw}
+	93.7% {margin-top: -391vw} 94% {margin-top: -392vw} 94.2% {margin-top: -393vw} 94.5% {margin-top: -394vw} 94.7% {margin-top: -395vw}
+	94.9% {margin-top: -396vw} 95.2% {margin-top: -397vw} 95.4% {margin-top: -398vw} 95.6% {margin-top: -399vw} 95.8% {margin-top: -400vw}
+	96% {margin-top: -401vw} 96.2% {margin-top: -402vw} 96.4% {margin-top: -403vw} 96.8% {margin-top: -404vw} 97% {margin-top: -405vw}
+	97.2% {margin-top: -406vw} 97.4% {margin-top: -407vw} 97.6% {margin-top: -408vw} 97.8% {margin-top: -409vw} 98% {margin-top: -410vw}
+	98.2% {margin-top: -411vw} 98.4% {margin-top: -412vw} 98.6% {margin-top: -413vw} 98.8% {margin-top: -414vw} 99% {margin-top: -415vw}
+	99.2% {margin-top: -416vw} 99.4% {margin-top: -417vw} 99.6% {margin-top: -418vw} 99.8% {margin-top: -419vw} 100% {margin-top: -420vw}
+}
+.poster{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	background-position: cover;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.p1{background-image: linear-gradient(to bottom, rgba(0,0,0,1) 5%, rgba(0,0,0,0.6)) , url('poster/big11.jpg');}
+.p2{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big12.jpg');}
+.p3{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big13.jpg');}
+.p4{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big21.jpg');}
+.p5{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big22.jpg');}
+.p6{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big23.jpg');}
+.p7{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big31.jpg');}
+.p8{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big32.jpg');}
+.p9{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big33.jpg');}
+.p10{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big41.jpg');}
+.p11{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)) , url('poster/big42.jpg');}
+.p12{background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 80%, rgba(0,0,0,1)) , url('poster/big43.jpg');}
+/*-------------------------------------------------------------------------------*/
+
+.mh{
+	margin-right: 10px;
+	color: white;
+	font-family: 'Showcard Gothic',monospace;
+	font-size: 5vw;
+	position: relative;
+	top: -55px;
+	text-shadow: 5px 5px #000;
+}
+.sh{
+	margin-right: 10px;
+	color: black;
+	font-weight: bold;
+	font-family: 'Allura',monospace;
+	font-size: 2vw;
+	text-shadow: 5px 5px 8px #fff, -5px -5px 8px #fff ;
+	position: relative;
+	top: -60px;
+}
+/*--------------------------------------------------------------------------*/
+
+#divide{
+	width: 75%;
+	height: 2px;
+	border: 0px;
+	text-align: center;
+	margin-top: 3vw;
+	color: transparent;
+	background-image: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.2), rgba(0,0,0,0.5), rgba(0,0,0,0.2), rgba(0,0,0,0.1));
+}
+#triangle{
+	width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-top: 30px solid #62259b;
+	margin-bottom: 5vw;
+}
+/*
+By setting width and height to zero on element, acual width of element is going to be width of border. Keep in mind that the 
+border edges on an element are 45 degree diagonals to each other. That's why this method works.
+https://www.freecodecamp.org/news/css-shapes-explained-how-to-draw-a-circle-triangle-and-more-using-pure-css/
+*/
+
+/*------------------------------------------------------------------------*/ 
+.box1{
+	width: 100%;
+	height: auto;
+	margin-top: 5px;
+	text-align: center;
+	color: white;
+	background-color: black;
+	padding: 6vw;
+	font-family: 'Dotum';
+	background: linear-gradient(to right, rgba(0,0,0,0.2) , rgba(0,0,0,0.3), rgba(0,0,0,0.4), rgba(0,0,0,0.5), rgba(0,0,0,0.4), rgba(0,0,0,0.3), rgba(0,0,0,0.2));
+}
+.l1{
+	font-size: 2.5vw;
+	font-weight: 1000;
+	letter-spacing: -0.3px;
+}
+.l2{
+	font-size: 1.3vw;
+}
+/*--------------------------------------------------------------------------*/
+.box2{
+	margin-top: 5px;
+	width: 100%;
+	height: auto;
+	text-align: left;
+	color: white;
+	padding: 14vw 3vw;
+	font-family: 'Dotum';
+	background-image: linear-gradient(to right, rgba(0,0,0,0.97), rgba(0,0,0,0.35)) , url('poster/avengers.jpg');
+	background-size: cover;
+}
+/*----------------------------------------------------------------------------------------------*/
+.box3{
+	margin-top: 5px;
+	width: 100%;
+	height: auto;
+	text-align: right;
+	color: white;
+	padding: 14vw 3vw;
+	font-family: 'Dotum';
+	background-image: linear-gradient(to right, rgba(0,0,0,0.35), rgba(0,0,0,0.65), rgba(0,0,0,0.98)) , url('poster/devices.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+/*---------------------------------------------------------------------------------------*/
+.box4{
+	width: 100%;
+	height: auto;
+	margin-top: 5px;
+	text-align: center;
+	color: white;
+	padding: 2vw;
+	font-family: 'Dotum';
+}
+.tile{
+	width: 30%;
+	height: 100%;
+	margin: 1.5vw;
+	padding: 6vw 2vw 8vw 2vw;
+	background: linear-gradient(to right,rgba(0,0,0,0.5),rgba(0,0,0,0.5));
+	border-radius: 30px;
+	float: left;
+	box-shadow: 0px 0px 0px #62259b;
+	transition: box-shadow 0.5s;
+}
+.tile:hover{
+	box-shadow: 8px 10px 6px #62259b;
+	background: linear-gradient(to right,rgba(0,0,0,0.6),rgba(0,0,0,0.6));
+}
+.tilelogo{
+	width: 90%;
+	height: 90%;
+	margin: 1vw;
+}
+.tc1{
+	font-weight: bold;
+	letter-spacing: 3px;
+}
+.tc2{
+	letter-spacing: 0.7px;
+}
+/*---------------------------------------------------------------------------------*/
+.logo{
+	width: 100%;
+	height: 5vw;
+	background: url('poster/logos.png');
+	background-size: auto 5vw;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+@media screen and (max-width: 750px)
+{
+	.box4>div{
+		flex-direction: column;
+		align-items: center;
+	}
+}
+/*---------------------------------------------------------------------------------*/
+footer{
+	text-align: center;
+	width: 100%;
+	height: auto;
+	background: #222;
+	padding: 2vw;
+}
+footer>a{
+	text-decoration: none;
+	color: #aaa;
+	font-family: 'Calibri',monospace;
+	font-size: 13px;
+}
+footer>a:hover{
+	color: black;
+	font-size: 15px;
+	text-shadow: 3px 3px 6px white, -3px -3px 6px white;
+}
+footer>font{
+	color: white;
+	font-family: 'Calibri',monospace;
+	font-size: 15px;
+}
+footer>hr{
+	border: 0;
+	width: 80%;
+	height: 1px;
+	color: transparent;
+	background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,0.9),rgba(255,255,255,0));
+}
+/*--------------------------------------------------------------*/

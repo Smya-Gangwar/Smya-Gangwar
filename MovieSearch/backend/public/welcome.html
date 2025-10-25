@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Welcome — Hooked</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    :root{--primary:#62259b;--muted:#666;--card-bg:#fff;--surface:#f6f6f8}
+    body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--surface);margin:0;padding:28px}
+    .wrap{max-width:980px;margin:28px auto;padding:22px;background:var(--card-bg);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.06)}
+    h1{margin:0 0 8px;font-size:22px}
+    .meta{color:var(--muted);margin-bottom:12px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{padding:10px 14px;border-radius:8px;border:1px solid #e6e6e6;cursor:pointer;background:#fff}
+    .btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .btn.ghost{background:#fff;color:var(--muted)}
+    .section{margin-top:18px}
+    .profile, .collection{display:flex;gap:18px;align-items:flex-start}
+    .avatar{width:72px;height:72px;border-radius:10px;background:linear-gradient(135deg,#eee,#ddd);display:flex;align-items:center;justify-content:center;font-weight:600;color:#444}
+    .info{flex:1}
+    pre{background:#fafafa;padding:12px;border-radius:8px;overflow:auto}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:12px}
+    .tile{background:#fff;border:1px solid #eee;padding:10px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.03)}
+    .tile img{width:100%;height:120px;object-fit:cover;border-radius:6px;margin-bottom:8px}
+    .muted{color:var(--muted);font-size:14px}
+    .notice{padding:12px;border-radius:8px;background:#fff;margin-top:12px;border:1px dashed #eee;color:var(--muted)}
+    .small{font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main" aria-labelledby="title">
+    <header>
+      <h1 id="title">Welcome</h1>
+      <div class="meta" id="meta">Checking sign-in status…</div>
+    </header>
+
+    <div id="signedOut" style="display:none">
+      <p class="notice">You are not signed in. To continue, go to Home and sign in with your account.</p>
+      <div class="actions">
+        <button class="btn primary" id="goHomeBtn">Go to Home</button>
+      </div>
+    </div>
+
+    <div id="signedIn" style="display:none">
+      <div class="profile">
+        <div class="avatar" id="avatar">U</div>
+        <div class="info">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div>
+              <div id="userName" style="font-weight:600;font-size:18px">User</div>
+              <div id="userEmail" class="small" style="margin-top:4px">email@example.com</div>
+            </div>
+            <div class="actions" style="margin-left:12px">
+              <button class="btn" id="toCollection">My Collection</button>
+              <button class="btn ghost" id="toDashboard">Dashboard</button>
+              <button class="btn primary" id="logoutBtn">Logout</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="small">Profile JSON (from /api/auth/me)</div>
+            <pre id="profile">Loading…</pre>
+          </div>
+        </div>
+      </div>
+
+      <section class="section">
+        <h3>Sample movies in your collection</h3>
+        <div class="grid" id="sampleGrid">
+          <!-- sample tiles inserted by JS -->
+        </div>
+        <div class="small" style="margin-top:10px">This is sample data. Your real collection will appear on the Dashboard.</div>
+      </section>
+    </div>
+
+    <hr style="margin-top:20px" />
+
+    <div class="small" style="margin-top:10px">
+      After logging out you can return to the Home page by clicking "Go to Home". To sign in again, click "Login / Signup" at the top-right on the Home page.
+    </div>
+  </main>
+
+  <script>
+    // UI helpers
+    const signedInEl = document.getElementById('signedIn');
+    const signedOutEl = document.getElementById('signedOut');
+    const metaEl = document.getElementById('meta');
+    const profileEl = document.getElementById('profile');
+    const avatarEl = document.getElementById('avatar');
+    const nameEl = document.getElementById('userName');
+    const emailEl = document.getElementById('userEmail');
+    const sampleGrid = document.getElementById('sampleGrid');
+
+    document.getElementById('goHomeBtn').addEventListener('click', () => location.href = '/');
+    document.getElementById('toCollection').addEventListener('click', () => location.href = '/dashboard.html');
+    document.getElementById('toDashboard').addEventListener('click', () => location.href = '/dashboard.html');
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('token');
+      showSignedOut('You have been logged out. Click "Go to Home" to return to the home page.');
+    });
+
+    function showSignedOut(msg) {
+      signedInEl.style.display = 'none';
+      signedOutEl.style.display = 'block';
+      metaEl.textContent = msg || 'Not signed in';
+      profileEl.textContent = '';
+    }
+
+    function showSignedIn(profile) {
+      signedOutEl.style.display = 'none';
+      signedInEl.style.display = 'block';
+      metaEl.textContent = 'Signed in';
+      nameEl.textContent = profile.name || profile.username || profile.email || 'User';
+      emailEl.textContent = profile.email || '';
+      avatarEl.textContent = (profile.name || profile.username || 'U').charAt(0).toUpperCase();
+      profileEl.textContent = JSON.stringify(profile, null, 2);
+    }
+
+    // sample placeholder movies
+    const sampleMovies = [
+      { title: 'The Great Heist', year: 2024, img: '/poster/big11.jpg' },
+      { title: 'Midnight Escape', year: 2023, img: '/poster/big21.jpg' },
+      { title: 'Lost Horizon', year: 2022, img: '/poster/big31.jpg' }
+    ];
+
+    function renderSample() {
+      sampleGrid.innerHTML = '';
+      sampleMovies.forEach(m => {
+        const d = document.createElement('div');
+        d.className = 'tile';
+        d.innerHTML = `<img src="${m.img}" alt="${m.title}" loading="lazy"><div style="font-weight:600">${m.title}</div><div class="muted">${m.year}</div>`;
+        sampleGrid.appendChild(d);
+      });
+    }
+
+    function getCleanToken() {
+      let t = localStorage.getItem('token');
+      if (!t) return null;
+      t = t.replace(/(^["'\s]+|["'\s]+$)/g, '').trim();
+      return t || null;
+    }
+
+    async function init(){
+      renderSample();
+      const token = getCleanToken();
+      if (!token) { showSignedOut('Not signed in. Go to Home and sign in.'); return; }
+
+      try {
+        const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token }});
+        const text = await res.text();
+        if (!res.ok) {
+          // show raw server message
+          showSignedOut('Signed in but failed to fetch profile. Please go Home and login again.');
+          document.getElementById('profile').textContent = text;
+          console.error('/api/auth/me returned error:', res.status, text);
+          return;
+        }
+        const profile = JSON.parse(text);
+        showSignedIn(profile);
+      } catch (err) {
+        showSignedOut('Network error while fetching profile. Go Home and try again.');
+        console.error(err);
+      }
+    }
+
+    // init
+    (async function init(){
+      renderSample();
+      const token = localStorage.getItem('token');
+      if (!token) {
+        showSignedOut('Not signed in. Go to Home and sign in.');
+        return;
+      }
+
+      // try fetch profile
+      try {
+        const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token }});
+        if (!res.ok) {
+          // token might be invalid — treat as logged out
+          showSignedOut('Signed in but failed to fetch profile. Please go Home and login again.');
+          return;
+        }
+        const profile = await res.json();
+        showSignedIn(profile);
+      } catch (err) {
+        showSignedOut('Network error while fetching profile. Go Home and try again.');
+      }
+    })();
+  </script>
+</body>
+</html>

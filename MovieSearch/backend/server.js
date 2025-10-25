@@ -1,42 +1,77 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const path = require('path');
 
-const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || "supersecretkey";
+dotenv.config();
 
-// Sign-Up
-router.post("/signup", async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-    const existing = await User.findOne({ email });
-    if (existing) return res.status(400).json({ message: "Email already registered" });
+const app = express();
 
-    const user = new User({ username, email, password });
-    await user.save();
-    res.status(201).json({ message: "User created successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Middleware
+app.use(express.json());
+app.use(cors());
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
+
+// Import routes
+const authRoutes = require('./routes/authRoutes');
+
+// Use API routes first
+app.use('/api/auth', authRoutes);
+
+// quick debug: request logger and ping endpoint
+app.use((req, res, next) => {
+  console.log(new Date().toISOString(), req.method, req.url);
+  next();
 });
 
-// Login
-router.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+app.get('/ping', (req, res) => res.send('pong'));
 
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(401).json({ message: "Invalid credentials" });
+// Serve frontend static files AFTER API routes
+app.use(express.static(path.join(__dirname, 'public')));
 
-    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: "1h" });
-    res.json({ message: "Login successful", token });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Serve favicon files at root (site.webmanifest, apple-touch-icon, favicon-*.png, etc.)
+app.use(express.static(path.join(__dirname, 'favicon')));
+
+// Serve poster images under /poster
+app.use('/poster', express.static(path.join(__dirname, 'poster')));
+
+// Catch-all route to serve index.html for frontend routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-module.exports = router;
+// Global error handler (optional)
+app.use((err, req, res, next) => {
+  console.error('Server Error:', err);
+  res.status(500).json({ message: 'Server error', error: err.message });
+});
+
+// Start server (replace current start/listen block)
+const DEFAULT_PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+
+function tryListen(port) {
+  const server = app.listen(port, () => {
+    console.log(`Server running on http://localhost:${server.address().port}`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`Port ${port} in use, trying ${port + 1}`);
+      tryListen(port + 1);
+    } else {
+      console.error('Server error:', err);
+      process.exit(1);
+    }
+  });
+}
+
+tryListen(DEFAULT_PORT);
 

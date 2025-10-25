@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Collection — Hooked</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .dash {
+      max-width: 980px;
+      margin: 36px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    .dash h1 { margin:0 0 8px 0; font-size:24px; }
+    .dash .meta { color:#555; margin-bottom:12px; }
+    .dash .actions { margin-top:16px; display:flex; gap:10px; }
+    .btn { padding:10px 14px; border-radius:6px; border:none; cursor:pointer; }
+    .btn-primary{ background:#62259b; color:#fff; }
+    .btn-ghost{ background:#f4f4f4; }
+    pre{ background:#f8f8f8;padding:12px;border-radius:6px;overflow:auto}
+  </style>
+</head>
+<body>
+  <div class="dash" role="main" aria-labelledby="dashTitle">
+    <h1 id="dashTitle">My Collection</h1>
+    <div class="meta" id="dashMeta">Checking sign-in status…</div>
+
+    <div id="userInfo">
+      <p>You are signed in. This page is a placeholder for your movie collection.</p>
+      <div class="actions">
+        <button id="goHome" class="btn btn-ghost">Home</button>
+        <button id="doLogout" class="btn btn-primary">Logout</button>
+      </div>
+    </div>
+
+    <hr />
+
+    <h3>Your profile (from /api/auth/me)</h3>
+    <div id="meResult"><pre id="mePre">No profile loaded.</pre></div>
+  </div>
+
+  <script>
+  // helper to call protected endpoint if backend supports it
+  function getCleanToken() {
+    let t = localStorage.getItem('token');
+    if (!t) return null;
+    // remove accidental surrounding quotes/newlines and trim
+    t = t.replace(/(^["'\s]+|["'\s]+$)/g, '').trim();
+    return t || null;
+  }
+
+  async function fetchMe(token) {
+    try {
+      const res = await fetch('/api/auth/me', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      const text = await res.text();
+      try {
+        // try parse JSON, fallback to raw text for diagnostics
+        const data = JSON.parse(text);
+        if (!res.ok) return { ok:false, status: res.status, data };
+        return { ok:true, data };
+      } catch (e) {
+        // non-JSON response
+        if (!res.ok) return { ok:false, status: res.status, data: text };
+        // JSON parse failed but server returned ok — return text
+        return { ok:true, data: text };
+      }
+    } catch (err) { return { ok:false, error: err.message }; }
+  }
+
+  document.getElementById('goHome').addEventListener('click', () => { location.href = '/'; });
+  document.getElementById('doLogout').addEventListener('click', () => {
+    try { localStorage.removeItem('token'); } catch(e) {}
+    location.href = '/';
+  });
+
+  (async function init(){
+    const token = getCleanToken();
+    const meta = document.getElementById('dashMeta');
+    const mePre = document.getElementById('mePre');
+    if (!token) {
+      meta.textContent = 'Not signed in. Redirecting to home…';
+      setTimeout(()=> location.href='/', 900);
+      return;
+    }
+    meta.textContent = 'Signed in — fetching profile…';
+    const r = await fetchMe(token);
+    if (r.ok) {
+      meta.textContent = 'Signed in as ' + (r.data.name || r.data.email || 'user');
+      mePre.textContent = JSON.stringify(r.data, null, 2);
+    } else {
+      // show full error info so you can debug server response
+      meta.textContent = 'Signed in but failed to fetch profile (' + (r.status || r.error) + ')';
+      mePre.textContent = (typeof r.data === 'string') ? r.data : JSON.stringify(r.data || r.error || r, null, 2);
+      console.error('fetch /api/auth/me error:', r);
+    }
+  })();
+  </script>
+</body>
+</html>
